@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhoneticPro - Universal IPA Transcriber</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- الشريط العلوي -->
+    <header class="navbar">
+        <div class="logo">
+            <span class="icon">🎙️</span>
+            <span class="brand">PhoneticPro</span>
+            <span class="badge">UNIVERSAL IPA</span>
+        </div>
+        <div class="nav-right">
+            <button class="nav-btn">📖 IPA Chart & Keyboard</button>
+        </div>
+    </header>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="main-container">
+        
+        <!-- العنوان -->
+        <div class="hero-text">
+            <span class="tag">✨ Complete Academic IPA • All Dialects • All Pronunciation Variants</span>
+            <h1>Transcribe Any Word into <span class="highlight">Authentic IPA</span></h1>
+            <p>Discover every legitimate pronunciation for any word or sentence. Compare accents, alternate pronunciations, heteronyms, syllable stress, and hear crystal-clear audio.</p>
+        </div>
+
+        <!-- صندوق الإدخال -->
+        <div class="input-card">
+            <textarea id="inputText" placeholder="Enter any word, name, phrase, or heteronym (e.g., 'Schedule', 'Caramel', 'Record', 'Either')..."></textarea>
+            
+            <div class="input-actions">
+                <button class="tool-btn">📋 Insert IPA Symbol</button>
+                <button class="primary-btn" onclick="convertText()">Transcribe 🔍</button>
+            </div>
+        </div>
+
+        <!-- صندوق النتيجة (يظهر بعد التحويل) -->
+        <div id="resultBox" class="result-card" style="display: none;">
+            <h3>IPA Result:</h3>
+            <p id="resultText"></p>
+            
+            <div class="action-buttons" id="actionButtons">
+                <button onclick="speakText()">🔊 Listen</button>
+                <button onclick="copyText()">📋 Copy</button>
+            </div>
+        </div>
+
+        <!-- اختيار اللهجة -->
+        <div class="dialects-section">
+            <div class="dialects-header">
+                <span>🌍 TARGET DIALECTS & ACCENTS:</span>
+                <span class="select-all">Select All Accents</span>
+            </div>
+            <div class="dialect-buttons">
+                <!-- زر أمريكي -->
+                <button class="dialect-btn active" id="btn-en-US" onclick="setAccent('en-US')">General American (US)</button>
+                <!-- زر بريطاني -->
+                <button class="dialect-btn" id="btn-en-GB" onclick="setAccent('en-GB')">Received Pronunciation (UK)</button>
+            </div>
+            <!-- حقل مخفي لتخزين اللهجة المختارة -->
+            <input type="hidden" id="accent" value="en-US">
+        </div>
+
+    </main>
+
+    <!-- التذييل (Footer) - بيانات التواصل -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>© 2025 PhoneticPro. All rights reserved.</p>
+            
+            <div class="social-links">
+                <a href="mailto:elmehdielhamdaoui6@gmail.com" title="Email">✉️ Email</a>
+                <a href="https://wa.me/212684372308" target="_blank" title="WhatsApp">💬 WhatsApp</a>
+                <a href="https://www.facebook.com/perfect.cell.56" target="_blank" title="Facebook">📘 Facebook</a>
+                <a href="https://www.instagram.com/the_legendary_prince_" target="_blank" title="Instagram">📸 Instagram</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ربط ملف الجافاسكريبت -->
+    <script src="script.js"></script>
+</body>
+</html>
