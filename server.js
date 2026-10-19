@@ -46,6 +46,10 @@ app.post('/api/convert', async (req, res) => {
 
 // 7. تشغيل الخادم على المنفذ 3000
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`✅ Server is running on port ${PORT}`);
-});
+// هذا التعديل يجعل الخادم يعمل على جهازك وعلى Vercel في نفس الوقت
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+        console.log(`✅ Server is running on port ${PORT}`);
+    });
+}
+module.exports = app;
