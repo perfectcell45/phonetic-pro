@@ -2,35 +2,52 @@ async function convertText() {
     const text = document.getElementById('inputText').value;
     const resultBox = document.getElementById('resultBox');
     const resultText = document.getElementById('resultText');
+    const actionButtons = document.getElementById('actionButtons');
     
     if (!text.trim()) {
         alert("Please enter text first.");
         return;
     }
 
-    resultText.textContent = "Loading... ⏳";
+    // 1. إظهار مؤشر التحميل
     resultBox.style.display = 'block';
+    if(actionButtons) actionButtons.style.display = 'none';
+    resultText.innerHTML = `<div class="loader-container"><div class="spinner"></div><span>Transcribing...</span></div>`;
 
+    // 👇 2. السر هنا: البحث في الذاكرة قبل إرسال الطلب
+    const cacheKey = 'ipa_cache_' + text.trim().toLowerCase();
+    const cachedResult = localStorage.getItem(cacheKey);
+
+    if (cachedResult) {
+        // إذا كانت الكلمة مترجمة سابقاً، أظهرها فوراً (بدون إنترنت)
+        resultText.innerHTML = `<div class="result-ipa">${cachedResult}</div>`;
+        if(actionButtons) actionButtons.style.display = 'flex';
+        return; // توقف عن التنفيذ، لا داعي لسؤال جوجل
+    }
+
+    // 3. إذا لم تكن في الذاكرة، أرسل الطلب لجوجل
     try {
-        // ⚠️ هنا التغيير الأهم: نرسل الطلب إلى خادمنا المحلي (server.js)
-        // وليس إلى جوجل مباشرة
         const response = await fetch('http://localhost:3000/api/convert', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ text: text }) // نرسل النص فقط
+            body: JSON.stringify({ text: text })
         });
 
         const data = await response.json();
 
-        // النتيجة الآن تأتي من خادمنا
         if (data.result) {
-            resultText.textContent = data.result;
+            // أظهر النتيجة
+            resultText.innerHTML = `<div class="result-ipa">${data.result}</div>`;
+            if(actionButtons) actionButtons.style.display = 'flex';
+            
+            // 👇 4. احفظ النتيجة في الذاكرة للمرة القادمة
+            localStorage.setItem(cacheKey, data.result);
         } else {
-            resultText.textContent = data.error || "Error occurred.";
+            resultText.innerHTML = `<div style="color: red;">Error: ${data.error || "Check API Key"}</div>`;
         }
 
     } catch (error) {
-        resultText.textContent = "Connection Error: Make sure server is running.";
+        resultText.innerHTML = `<div style="color: red;">Connection Error.</div>`;
     }
 }
 
@@ -58,7 +75,7 @@ function speakText() {
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(originalText);
     utterance.lang = selectedAccent; 
-    utterance.rate = 0.9;
+    utterance.rate = 0.5;
     window.speechSynthesis.speak(utterance);
 }
 

@@ -320,3 +320,35 @@ textarea::placeholder {
     color: #312e81;
     text-decoration: underline;
 }
+/* تنسيق مؤشر التحميل */
+.loader-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: #7c83fd;
+    font-weight: 600;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 3px solid #e2e8f0;
+    border-top: 3px solid #7c83fd;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.result-ipa {
+    font-size: 24px;
+    color: #15803d;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
