@@ -37,7 +37,7 @@ app.post('/api/convert', async (req, res) => {
         });
 
         const data = await response.json();
-        
+        console.log("DEBUG_GOOGLE_RESPONSE:", JSON.stringify(data));
         if (data.candidates && data.candidates[0].content.parts[0].text) {
             res.json({ result: data.candidates[0].content.parts[0].text });
         } else {
