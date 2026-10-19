@@ -27,7 +27,7 @@ async function convertText() {
 
     // 3. إذا لم تكن في الذاكرة، أرسل الطلب لجوجل
     try {
-        const response = await fetch('http://localhost:3000/api/convert', {
+        const response = await fetch('/api/convert', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ text: text })
